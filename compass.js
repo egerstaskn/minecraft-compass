@@ -1,6 +1,5 @@
 let referenceAlpha = null;
 const compassSprite = document.getElementById('compass-sprite');
-const referenceIndicator = document.getElementById('reference-indicator');
 const resetBtn = document.getElementById('reset-btn');
 const info = document.getElementById('info');
 const permissionRequest = document.getElementById('permission-request');
@@ -10,12 +9,17 @@ let permissionGranted = false;
 let orientationListenerAdded = false;
 
 const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
-const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
-const FRAME_OFFSET = 17; // 17. kare yukarı bakıyor
+const FRAME_HEIGHT = 128; // Her bir karenin yüksekliği (px)
+const REFERENCE_FRAME = 17; // 17. kare ok yukarıda
+
+function setCompassFrameByFrameIndex(frame) {
+  frame = frame % FRAME_COUNT;
+  compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
+}
 
 function setCompassFrame(angle) {
-  let frame = (Math.floor((angle % 360) / 360 * FRAME_COUNT) + FRAME_OFFSET) % FRAME_COUNT;
-  compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
+  let frame = Math.floor((angle % 360) / 360 * FRAME_COUNT);
+  setCompassFrameByFrameIndex(frame);
 }
 
 function handleOrientation(event) {
@@ -23,25 +27,25 @@ function handleOrientation(event) {
   if (typeof event.webkitCompassHeading !== 'undefined') {
     alpha = event.webkitCompassHeading;
   }
-  let angle = alpha;
   if (referenceAlpha !== null) {
-    angle = (alpha - referenceAlpha + 180 + 360) % 360; // 180 derece kaydır
+    // Referans alındıysa, pusula sabit 17. karede kalsın
+    setCompassFrameByFrameIndex(REFERENCE_FRAME);
+  } else {
+    setCompassFrame(alpha);
   }
-  setCompassFrame(angle);
 }
 
 function setReference(event) {
   if (window.lastAlpha !== undefined) {
     referenceAlpha = window.lastAlpha;
     info.textContent = 'Referans yön belirlendi! Sıfırlamak için butona basın.';
-    // setReferenceIndicator(true); // Removed as per edit hint
+    setCompassFrameByFrameIndex(REFERENCE_FRAME);
   }
 }
 
 function resetReference() {
   referenceAlpha = null;
   info.textContent = 'Cihazınızı döndürün veya ekrana dokunarak referans yönü belirleyin.';
-  // setReferenceIndicator(false); // Removed as per edit hint
 }
 
 function addOrientationListener() {
