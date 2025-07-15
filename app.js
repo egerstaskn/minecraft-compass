@@ -1,4 +1,4 @@
-const SPRITE_SRC = 'compass-sprite.png';
+const SPRITE_SRC = 'compass_sprite.png';
 const SPRITE_FRAME_COUNT = 34;
 const SPRITE_FRAME_WIDTH = 64;
 const SPRITE_FRAME_HEIGHT = 64;
