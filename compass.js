@@ -9,17 +9,12 @@ let permissionGranted = false;
 let orientationListenerAdded = false;
 
 const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
-const FRAME_HEIGHT = 128; // Her bir karenin yüksekliği (px)
-const REFERENCE_FRAME = 17; // 17. kare ok yukarıda
-
-function setCompassFrameByFrameIndex(frame) {
-  frame = frame % FRAME_COUNT;
-  compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
-}
+const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
+const FRAME_OFFSET = 17; // 17. kare yukarı bakıyor
 
 function setCompassFrame(angle) {
-  let frame = Math.floor((angle % 360) / 360 * FRAME_COUNT);
-  setCompassFrameByFrameIndex(frame);
+  let frame = (Math.floor((angle % 360) / 360 * FRAME_COUNT) + FRAME_OFFSET) % FRAME_COUNT;
+  compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
 }
 
 function handleOrientation(event) {
@@ -27,19 +22,17 @@ function handleOrientation(event) {
   if (typeof event.webkitCompassHeading !== 'undefined') {
     alpha = event.webkitCompassHeading;
   }
+  let angle = alpha;
   if (referenceAlpha !== null) {
-    // Referans alındıysa, pusula sabit 17. karede kalsın
-    setCompassFrameByFrameIndex(REFERENCE_FRAME);
-  } else {
-    setCompassFrame(alpha);
+    angle = (alpha - referenceAlpha + 360) % 360;
   }
+  setCompassFrame(angle);
 }
 
 function setReference(event) {
   if (window.lastAlpha !== undefined) {
     referenceAlpha = window.lastAlpha;
     info.textContent = 'Referans yön belirlendi! Sıfırlamak için butona basın.';
-    setCompassFrameByFrameIndex(REFERENCE_FRAME);
   }
 }
 
