@@ -1,5 +1,5 @@
 let referenceAlpha = null;
-const compassImg = document.getElementById('compass');
+const compassSprite = document.getElementById('compass-sprite');
 const referenceIndicator = document.getElementById('reference-indicator');
 const resetBtn = document.getElementById('reset-btn');
 const info = document.getElementById('info');
@@ -9,8 +9,12 @@ const permissionBtn = document.getElementById('permission-btn');
 let permissionGranted = false;
 let orientationListenerAdded = false;
 
-function setCompassRotation(alpha) {
-  compassImg.style.transform = `rotate(${-alpha}deg)`;
+const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
+const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
+
+function setCompassFrame(angle) {
+  let frame = Math.round((angle % 360) / 360 * FRAME_COUNT) % FRAME_COUNT;
+  compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
 }
 
 function setReferenceIndicator(show) {
@@ -20,17 +24,16 @@ function setReferenceIndicator(show) {
 function handleOrientation(event) {
   let alpha = event.alpha;
   if (typeof event.webkitCompassHeading !== 'undefined') {
-    // iOS
     alpha = event.webkitCompassHeading;
   }
+  let angle = alpha;
   if (referenceAlpha !== null) {
-    let diff = alpha - referenceAlpha;
-    setCompassRotation(diff);
+    angle = (alpha - referenceAlpha + 360) % 360;
     setReferenceIndicator(true);
   } else {
-    setCompassRotation(alpha);
     setReferenceIndicator(false);
   }
+  setCompassFrame(angle);
 }
 
 function setReference(event) {
@@ -61,12 +64,10 @@ function addOrientationListener() {
   }
 }
 
-// Ekrana dokununca referans yönü belirle
 window.addEventListener('touchend', setReference);
 window.addEventListener('click', setReference);
 resetBtn.addEventListener('click', resetReference);
 
-// Sensör izni isteme akışı
 function showPermissionRequest() {
   permissionRequest.style.display = 'block';
   info.style.display = 'none';
@@ -81,7 +82,6 @@ function hidePermissionRequest() {
 function requestPermissionIfNeeded() {
   if (typeof DeviceOrientationEvent !== 'undefined' &&
       typeof DeviceOrientationEvent.requestPermission === 'function') {
-    // iOS: Buton göster, izin verilince event ekle
     showPermissionRequest();
     permissionBtn.onclick = function() {
       DeviceOrientationEvent.requestPermission().then(function(permissionState) {
@@ -98,7 +98,6 @@ function requestPermissionIfNeeded() {
       });
     };
   } else {
-    // Android veya masaüstü: otomatik izin ve event listener
     permissionGranted = true;
     hidePermissionRequest();
     addOrientationListener();
