@@ -1,4 +1,6 @@
+let referenceAlpha = null;
 const compassSprite = document.getElementById('compass-sprite');
+const referenceIndicator = document.getElementById('reference-indicator');
 const resetBtn = document.getElementById('reset-btn');
 const info = document.getElementById('info');
 const permissionRequest = document.getElementById('permission-request');
@@ -6,48 +8,58 @@ const permissionBtn = document.getElementById('permission-btn');
 
 let permissionGranted = false;
 let orientationListenerAdded = false;
-let referenceSet = false;
 
 const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
-const FRAME_HEIGHT = 128; // Her bir karenin yüksekliği (px)
-const REFERENCE_FRAME = 16; // 17. görsel (0'dan başlıyor)
+const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
 
-function setCompassFrameByFrameIndex(frame) {
-  frame = frame % FRAME_COUNT;
+function setCompassFrame(angle) {
+  let frame = Math.round((angle % 360) / 360 * FRAME_COUNT) % FRAME_COUNT;
   compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
 }
 
-function setCompassFrame(angle) {
-  let frame = Math.floor((angle % 360) / 360 * FRAME_COUNT);
-  setCompassFrameByFrameIndex(frame);
+function setReferenceIndicator(show) {
+  referenceIndicator.style.display = show ? 'block' : 'none';
 }
 
 function handleOrientation(event) {
-  if (referenceSet) {
-    setCompassFrameByFrameIndex(REFERENCE_FRAME);
-    return;
-  }
   let alpha = event.alpha;
   if (typeof event.webkitCompassHeading !== 'undefined') {
     alpha = event.webkitCompassHeading;
   }
-  setCompassFrame(alpha);
+  let angle = alpha;
+  if (referenceAlpha !== null) {
+    angle = (alpha - referenceAlpha + 360) % 360;
+    setReferenceIndicator(true);
+  } else {
+    setReferenceIndicator(false);
+  }
+  setCompassFrame(angle);
 }
 
 function setReference(event) {
-  referenceSet = true;
-  info.textContent = 'Referans noktası ayarlandı! Sıfırlamak için butona basın.';
-  setCompassFrameByFrameIndex(REFERENCE_FRAME);
+  if (window.lastAlpha !== undefined) {
+    referenceAlpha = window.lastAlpha;
+    info.textContent = 'Referans yön belirlendi! Sıfırlamak için butona basın.';
+    setReferenceIndicator(true);
+  }
 }
 
 function resetReference() {
-  referenceSet = false;
-  info.textContent = 'Cihazınızı döndürün veya ekrana dokunarak referans noktası belirleyin.';
+  referenceAlpha = null;
+  info.textContent = 'Cihazınızı döndürün veya ekrana dokunarak referans yönü belirleyin.';
+  setReferenceIndicator(false);
 }
 
 function addOrientationListener() {
   if (!orientationListenerAdded) {
-    window.addEventListener('deviceorientation', handleOrientation, true);
+    window.addEventListener('deviceorientation', function(event) {
+      let alpha = event.alpha;
+      if (typeof event.webkitCompassHeading !== 'undefined') {
+        alpha = event.webkitCompassHeading;
+      }
+      window.lastAlpha = alpha;
+      handleOrientation(event);
+    }, true);
     orientationListenerAdded = true;
   }
 }
