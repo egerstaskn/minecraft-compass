@@ -28,10 +28,7 @@ function handleOrientation(event) {
   }
   let angle = alpha;
   if (referenceAlpha !== null) {
-    angle = (alpha - referenceAlpha + 360) % 360;
-    setReferenceIndicator(true);
-  } else {
-    setReferenceIndicator(false);
+    angle = (alpha - referenceAlpha + 180 + 360) % 360; // 180 derece kaydır
   }
   setCompassFrame(angle);
 }
