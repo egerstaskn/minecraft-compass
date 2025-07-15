@@ -13,7 +13,7 @@ const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
 const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
 
 function setCompassFrame(angle) {
-  let frame = Math.round((angle % 360) / 360 * FRAME_COUNT) % FRAME_COUNT;
+  let frame = Math.floor((angle % 360) / 360 * FRAME_COUNT) % FRAME_COUNT;
   compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
 }
 
