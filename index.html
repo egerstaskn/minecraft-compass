@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minecraft Compass</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Minecraft Compass</h1>
+    <div class="compass-wrapper">
+      <img id="compass" src="compass.svg" alt="Compass" />
+      <div id="reference-indicator"></div>
+    </div>
+    <div id="permission-request" style="display:none;">
+      <p>Yön sensörünü kullanmak için izin vermeniz gerekiyor.</p>
+      <button id="permission-btn">Sensör İznini Ver</button>
+    </div>
+    <button id="reset-btn">Referansı Sıfırla</button>
+    <p id="info">Cihazınızı döndürün veya ekrana dokunarak referans yönü belirleyin.</p>
+  </div>
+  <script src="compass.js"></script>
+</body>
+</html> 
