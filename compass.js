@@ -10,16 +10,12 @@ let permissionGranted = false;
 let orientationListenerAdded = false;
 
 const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
-const FRAME_HEIGHT = 128; // Her bir karenin yüksekliği (px)
+const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
 const FRAME_OFFSET = 17; // 17. kare yukarı bakıyor
 
 function setCompassFrame(angle) {
   let frame = (Math.floor((angle % 360) / 360 * FRAME_COUNT) + FRAME_OFFSET) % FRAME_COUNT;
   compassSprite.style.backgroundPosition = `0px -${frame * FRAME_HEIGHT}px`;
-}
-
-function setReferenceIndicator(show) {
-  referenceIndicator.style.display = show ? 'block' : 'none';
 }
 
 function handleOrientation(event) {
@@ -38,14 +34,14 @@ function setReference(event) {
   if (window.lastAlpha !== undefined) {
     referenceAlpha = window.lastAlpha;
     info.textContent = 'Referans yön belirlendi! Sıfırlamak için butona basın.';
-    setReferenceIndicator(true);
+    // setReferenceIndicator(true); // Removed as per edit hint
   }
 }
 
 function resetReference() {
   referenceAlpha = null;
   info.textContent = 'Cihazınızı döndürün veya ekrana dokunarak referans yönü belirleyin.';
-  setReferenceIndicator(false);
+  // setReferenceIndicator(false); // Removed as per edit hint
 }
 
 function addOrientationListener() {
