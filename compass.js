@@ -10,7 +10,7 @@ let permissionGranted = false;
 let orientationListenerAdded = false;
 
 const FRAME_COUNT = 32; // Sprite sheet'teki toplam kare sayısı
-const FRAME_HEIGHT = 64; // Her bir karenin yüksekliği (px)
+const FRAME_HEIGHT = 128; // Her bir karenin yüksekliği (px)
 const FRAME_OFFSET = 17; // 17. kare yukarı bakıyor
 
 function setCompassFrame(angle) {

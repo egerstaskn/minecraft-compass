@@ -28,36 +28,36 @@ h1 {
 }
 
 .compass-wrapper {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
   position: relative;
   margin: 0 auto 16px auto;
   overflow: hidden;
 }
 
 #compass-sprite {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
   background: url('compass_sprite.png') 0 0 no-repeat;
-  background-size: 64px 2048px;
+  background-size: 128px 4096px; /* 32 kare x 128px */
   image-rendering: pixelated;
   margin: 0 auto;
   transition: background-position 0.1s;
-  overflow: hidden;
   display: block;
 }
 
 #reference-indicator {
   position: absolute;
   left: 50%;
-  top: 50%;
-  width: 12px;
-  height: 12px;
+  top: 0%;
+  width: 18px;
+  height: 18px;
   background: #ff0;
   border-radius: 50%;
-  transform: translate(-50%, -120px);
+  transform: translate(-50%, -40%);
   box-shadow: 0 0 8px 2px #ff0a;
   display: none;
+  z-index: 2;
 }
 
 #reset-btn {
