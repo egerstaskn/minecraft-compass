@@ -3,23 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minecraft Compass</title>
+  <title>Pusula Uygulaması</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Minecraft Compass</h1>
-    <div class="compass-wrapper">
-      <div id="compass-sprite"></div>
-      <div id="reference-indicator"></div>
+    <div id="compass-container">
+      <canvas id="compass" width="64" height="64"></canvas>
     </div>
-    <div id="permission-request" style="display:none;">
-      <p>Yön sensörünü kullanmak için izin vermeniz gerekiyor.</p>
-      <button id="permission-btn">Sensör İznini Ver</button>
-    </div>
-    <button id="reset-btn">Referansı Sıfırla</button>
-    <p id="info">Cihazınızı döndürün veya ekrana dokunarak referans yönü belirleyin.</p>
+    <button id="sensor-btn">Sensör İzni İste</button>
   </div>
-  <script src="compass.js"></script>
+  <script src="app.js"></script>
 </body>
 </html> 
