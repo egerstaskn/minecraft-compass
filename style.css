@@ -32,15 +32,19 @@ h1 {
   height: 64px;
   position: relative;
   margin: 0 auto 16px auto;
+  overflow: hidden;
 }
 
 #compass-sprite {
   width: 64px;
   height: 64px;
   background: url('compass_sprite.png') 0 0 no-repeat;
+  background-size: 64px 2048px;
   image-rendering: pixelated;
   margin: 0 auto;
   transition: background-position 0.1s;
+  overflow: hidden;
+  display: block;
 }
 
 #reference-indicator {
