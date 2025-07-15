@@ -28,18 +28,18 @@ h1 {
 }
 
 .compass-wrapper {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
   position: relative;
   margin: 0 auto 16px auto;
   overflow: hidden;
 }
 
 #compass-sprite {
-  width: 64px;
-  height: 64px;
+  width: 128px;
+  height: 128px;
   background: url('compass_sprite.png') 0 0 no-repeat;
-  background-size: 64px 2048px; /* 32 kare x 64px */
+  background-size: 128px 4096px; /* 32 kare x 128px */
   image-rendering: pixelated;
   margin: 0 auto;
   transition: background-position 0.1s;
