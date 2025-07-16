@@ -15,6 +15,14 @@ img.onload = function() {
   drawFrame(currentFrame);
 };
 
+img.onerror = function() {
+  ctx.clearRect(0, 0, SPRITE_FRAME_WIDTH, SPRITE_FRAME_HEIGHT);
+  ctx.fillStyle = '#fff';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Görsel yüklenemedi!', SPRITE_FRAME_WIDTH/2, SPRITE_FRAME_HEIGHT/2);
+};
+
 function drawFrame(frame) {
   ctx.clearRect(0, 0, SPRITE_FRAME_WIDTH, SPRITE_FRAME_HEIGHT);
   ctx.drawImage(
