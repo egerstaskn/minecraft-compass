@@ -16,7 +16,8 @@ body {
   margin-bottom: 20px;
 }
 .compass-sprite {
-  width: 560px;
+  width: 100vw;
+  max-width: 560px;
   height: 480px;
   overflow: hidden;
   position: relative;
@@ -44,19 +45,4 @@ body {
 }
 #sensor-btn:hover {
   background: #444;
-}
-
-@media (max-width: 600px) {
-  .compass-sprite {
-    width: 100vw;
-    max-width: 100vw;
-    height: auto;
-    aspect-ratio: 560 / 480;
-  }
-  #compass-sprite-img {
-    width: 100vw;
-    max-width: 100vw;
-    height: auto;
-    aspect-ratio: 50400 / 480;
-  }
 } 
