@@ -1,16 +1,27 @@
-const needle = document.getElementById('needle');
+const compassImg = document.getElementById('compass-sprite-img');
 const sensorBtn = document.getElementById('sensor-btn');
 const slider = document.getElementById('angle-slider');
 const degreeLabel = document.getElementById('degree-label');
 
-function setNeedle(angle) {
-  needle.setAttribute('transform', `rotate(${angle} 100 100)`);
+const SPRITE_COUNT = 90;
+const SPRITE_WIDTH = 560;
+const SPRITE_HEIGHT = 480;
+const SPRITE_START_INDEX = 22; // 23. sprite (0'dan başlıyor)
+
+function setCompass(angle) {
+  // 0-360 arası açıyı 0-89 arası sprite indexine çevir
+  let spriteIndex = Math.round((angle % 360) / (360 / SPRITE_COUNT));
+  // 23. sprite başlangıç olacak şekilde kaydır
+  spriteIndex = (spriteIndex + SPRITE_START_INDEX) % SPRITE_COUNT;
+  // Sprite'ı sola kaydır
+  const left = -spriteIndex * SPRITE_WIDTH;
+  compassImg.style.left = left + 'px';
   degreeLabel.textContent = `${Math.round(angle)}°`;
 }
 
 // Masaüstü için slider ile test
 slider.addEventListener('input', (e) => {
-  setNeedle(e.target.value);
+  setCompass(e.target.value);
 });
 
 // Sensör izni ve yön okuma
@@ -42,14 +53,14 @@ sensorBtn.addEventListener('click', async () => {
 function handleOrientation(event) {
   let angle = event.alpha;
   if (typeof angle === 'number') {
-    setNeedle(360 - angle); // Kuzey yukarıda olacak şekilde
+    setCompass(360 - angle); // Kuzey yukarıda olacak şekilde
   }
 }
 
 // Eğer mobil değilse slider ile test et
 if (!/Mobi|Android/i.test(navigator.userAgent)) {
   slider.style.display = 'block';
-  setNeedle(slider.value);
+  setCompass(slider.value);
 } else {
-  setNeedle(0);
+  setCompass(0);
 } 

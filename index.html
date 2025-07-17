@@ -10,14 +10,9 @@
 <body>
   <div class="container">
     <div class="compass-wrapper">
-      <svg id="compass" width="200" height="200" viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="90" stroke="#fff" stroke-width="4" fill="#222"/>
-        <polygon id="needle" points="100,30 110,110 100,100 90,110" fill="red"/>
-        <text x="100" y="50" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial">N</text>
-        <text x="100" y="180" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial">S</text>
-        <text x="30" y="110" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial">W</text>
-        <text x="170" y="110" text-anchor="middle" fill="#fff" font-size="18" font-family="Arial">E</text>
-      </svg>
+      <div class="compass-sprite">
+        <img id="compass-sprite-img" src="compass.png" width="50400" height="480" style="position:absolute; left:0; top:0;" />
+      </div>
     </div>
     <button id="sensor-btn">Sensör İzni İste</button>
     <input type="range" id="angle-slider" min="0" max="360" value="0" style="width:200px; margin-top:20px; display:none;">

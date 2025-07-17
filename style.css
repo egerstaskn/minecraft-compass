@@ -15,6 +15,24 @@ body {
 .compass-wrapper {
   margin-bottom: 20px;
 }
+.compass-sprite {
+  width: 560px;
+  height: 480px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+#compass-sprite-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 480px;
+  width: 50400px;
+  user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
 #sensor-btn {
   padding: 10px 20px;
   font-size: 16px;
