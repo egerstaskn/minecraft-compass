@@ -16,9 +16,8 @@ body {
   margin-bottom: 20px;
 }
 .compass-sprite {
-  width: 100vw;
-  max-width: 560px;
-  height: 480px;
+  width: 160px;
+  height: 160px;
   overflow: hidden;
   position: relative;
   margin: 0 auto;
@@ -28,8 +27,8 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 480px;
-  width: 50400px;
+  height: 160px;
+  width: 4548px;
   user-drag: none;
   user-select: none;
   pointer-events: none;
