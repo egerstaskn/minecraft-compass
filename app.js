@@ -11,8 +11,10 @@ const SPRITE_TOTAL_WIDTH = SPRITE_WIDTH + 2 * SPRITE_MARGIN; // 162px
 const SPRITE_START_INDEX = 14; // 15. sprite (index 14)
 
 function setCompass(angle) {
+  // Pusula iğnesi her zaman kuzeyi göstersin diye açıyı tersine çevir
+  angle = (360 - (angle % 360)) % 360;
   // 0-360 arası açıyı 0-27 arası sprite indexine çevir
-  let spriteIndex = Math.round((angle % 360) / (360 / SPRITE_COUNT));
+  let spriteIndex = Math.round(angle / (360 / SPRITE_COUNT));
   spriteIndex = (spriteIndex + SPRITE_START_INDEX) % SPRITE_COUNT;
   // Sprite'ı sola kaydır (her kare arası 2px boşluk var)
   const left = -(spriteIndex * SPRITE_TOTAL_WIDTH + SPRITE_MARGIN);
